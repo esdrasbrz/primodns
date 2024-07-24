@@ -1,6 +1,7 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
 	"log"
 
@@ -13,5 +14,6 @@ func main() {
 		log.Fatal(err)
 	}
 
-	fmt.Println(*config.Radarr, *config.Sonarr)
+	configJson, _ := json.Marshal(config)
+	fmt.Println(string(configJson))
 }
