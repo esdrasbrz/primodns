@@ -1,7 +1,17 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"log"
+
+	"github.com/esdrasbrz/primoflix/config"
+)
 
 func main() {
-	fmt.Println("Hello")
+	config, err := config.LoadConfig()
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	fmt.Println(*config.Radarr, *config.Sonarr)
 }
