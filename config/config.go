@@ -7,7 +7,7 @@ import (
 type Config struct {
 	Sonarr *SonarrConfig
 	Radarr *RadarrConfig
-	Godaddy *GodaddyConfig
+	Cloudflare *CloudflareConfig
 }
 
 func LoadConfig() (*Config, error) {
@@ -24,7 +24,7 @@ func LoadConfig() (*Config, error) {
 		return nil, err
 	}
 
-	godaddyConfig, err := loadGodaddyConfig()
+	cloudflareConfig, err := loadCloudflareConfig()
 	if err != nil {
 		return nil, err
 	}
@@ -32,7 +32,7 @@ func LoadConfig() (*Config, error) {
 	config := Config{
 		Sonarr: sonarrConfig,
 		Radarr: radarrConfig,
-		Godaddy: godaddyConfig,
+		Cloudflare: cloudflareConfig,
 	}
 
 	return &config, nil
