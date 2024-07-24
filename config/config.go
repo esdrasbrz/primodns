@@ -25,6 +25,9 @@ func LoadConfig() (*Config, error) {
 	}
 
 	godaddyConfig, err := loadGodaddyConfig()
+	if err != nil {
+		return nil, err
+	}
 
 	config := Config{
 		Sonarr: sonarrConfig,
