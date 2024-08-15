@@ -11,12 +11,16 @@ import (
 	"go.uber.org/zap"
 )
 
+type CloudflareService interface {
+	UpdateDomains(content string) error
+}
+
 type service struct {
 	config *config.CloudflareConfig
 	logger *zap.Logger
 }
 
-func New(config *config.CloudflareConfig, logger *zap.Logger) (*service) {
+func New(config *config.CloudflareConfig, logger *zap.Logger) CloudflareService {
 	return &service{
 		config: config,
 		logger: logger,
@@ -35,7 +39,7 @@ func (s *service) UpdateDomains(content string) (result error) {
 	return
 }
 
-func (s *service) updateDomain(dnsRecord, content string) (error) {
+func (s *service) updateDomain(dnsRecord, content string) error {
 	client := http.Client{}
 	url := fmt.Sprintf(
 		"https://api.cloudflare.com/client/v4/zones/%s/dns_records/%s",
@@ -50,7 +54,7 @@ func (s *service) updateDomain(dnsRecord, content string) (error) {
 	}
 
 	req.Header = http.Header{
-		"Content-Type": {"application/json"},
+		"Content-Type":  {"application/json"},
 		"Authorization": {"Bearer " + s.config.ApiToken},
 	}
 

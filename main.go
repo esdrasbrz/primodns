@@ -2,6 +2,7 @@ package main
 
 import (
 	"github.com/esdrasbrz/primoflix/config"
+	"github.com/esdrasbrz/primoflix/ddns"
 	"github.com/esdrasbrz/primoflix/services/cloudflare"
 	"go.uber.org/zap"
 )
@@ -16,10 +17,8 @@ func main() {
 		sugar.Fatal(err)
 	}
 
-	cloudflareService := cloudflare.New(config.Cloudflare, logger)
+	cfs := cloudflare.New(config.Cloudflare, logger)
+	dyn := ddns.New(logger, cfs)
 
-	err = cloudflareService.UpdateDomains("8.8.8.8")
-	if err != nil {
-		sugar.Fatal(err)
-	}
+	dyn.RunDDNSUpdater()
 }

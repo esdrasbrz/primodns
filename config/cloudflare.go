@@ -7,15 +7,15 @@ import (
 )
 
 type CloudflareConfig struct {
-	ApiToken string
-	ZoneId string
+	ApiToken   string
+	ZoneId     string
 	DnsRecords []string
 }
 
 func loadCloudflareConfig() (*CloudflareConfig, error) {
 	config := &CloudflareConfig{
-		ApiToken: os.Getenv("CLOUDFLARE_API_TOKEN"),
-		ZoneId: os.Getenv("CLOUDFLARE_ZONE_ID"),
+		ApiToken:   os.Getenv("CLOUDFLARE_API_TOKEN"),
+		ZoneId:     os.Getenv("CLOUDFLARE_ZONE_ID"),
 		DnsRecords: strings.Split(os.Getenv("CLOUDFLARE_DNS_RECORDS"), ","),
 	}
 

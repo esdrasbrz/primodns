@@ -6,13 +6,13 @@ import (
 )
 
 type RadarrConfig struct {
-	Addr string
+	Addr   string
 	ApiKey string
 }
 
 func loadRadarrConfig() (*RadarrConfig, error) {
 	config := &RadarrConfig{
-		Addr: os.Getenv("RADARR_ADDR"),
+		Addr:   os.Getenv("RADARR_ADDR"),
 		ApiKey: os.Getenv("RADARR_API_KEY"),
 	}
 

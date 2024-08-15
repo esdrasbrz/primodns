@@ -5,8 +5,8 @@ import (
 )
 
 type Config struct {
-	Sonarr *SonarrConfig
-	Radarr *RadarrConfig
+	Sonarr     *SonarrConfig
+	Radarr     *RadarrConfig
 	Cloudflare *CloudflareConfig
 }
 
@@ -30,8 +30,8 @@ func LoadConfig() (*Config, error) {
 	}
 
 	config := Config{
-		Sonarr: sonarrConfig,
-		Radarr: radarrConfig,
+		Sonarr:     sonarrConfig,
+		Radarr:     radarrConfig,
 		Cloudflare: cloudflareConfig,
 	}
 

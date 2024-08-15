@@ -6,13 +6,13 @@ import (
 )
 
 type SonarrConfig struct {
-	Addr string
+	Addr   string
 	ApiKey string
 }
 
 func loadSonarrConfig() (*SonarrConfig, error) {
 	config := &SonarrConfig{
-		Addr: os.Getenv("SONARR_ADDR"),
+		Addr:   os.Getenv("SONARR_ADDR"),
 		ApiKey: os.Getenv("SONARR_API_KEY"),
 	}
 
