@@ -6,7 +6,7 @@ import (
 	"fmt"
 	"net/http"
 
-	"github.com/esdrasbrz/primoflix/config"
+	"github.com/esdrasbrz/primodns/config"
 	"github.com/hashicorp/go-multierror"
 	"go.uber.org/zap"
 )

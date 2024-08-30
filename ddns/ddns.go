@@ -3,7 +3,7 @@ package ddns
 import (
 	"time"
 
-	"github.com/esdrasbrz/primoflix/services/cloudflare"
+	"github.com/esdrasbrz/primodns/services/cloudflare"
 	externalip "github.com/glendc/go-external-ip"
 	"go.uber.org/zap"
 )
@@ -12,7 +12,7 @@ type DDNS struct {
 	consensus  *externalip.Consensus
 	cloudflare cloudflare.CloudflareService
 	logger     *zap.Logger
-	lastIP string
+	lastIP     string
 }
 
 func New(logger *zap.Logger, cloudflare cloudflare.CloudflareService) *DDNS {
@@ -44,7 +44,7 @@ func (d *DDNS) update() {
 		d.logger.Error("error while updating Cloudflare", zap.Error(err))
 		return
 	}
-	
+
 	d.lastIP = ip.String()
 	d.logger.Info("Domains updated", zap.String("ip", ip.String()))
 }

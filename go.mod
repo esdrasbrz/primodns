@@ -1,4 +1,4 @@
-module github.com/esdrasbrz/primoflix
+module github.com/esdrasbrz/primodns
 
 go 1.22
 

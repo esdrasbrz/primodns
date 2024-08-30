@@ -1,9 +1,9 @@
 package main
 
 import (
-	"github.com/esdrasbrz/primoflix/config"
-	"github.com/esdrasbrz/primoflix/ddns"
-	"github.com/esdrasbrz/primoflix/services/cloudflare"
+	"github.com/esdrasbrz/primodns/config"
+	"github.com/esdrasbrz/primodns/ddns"
+	"github.com/esdrasbrz/primodns/services/cloudflare"
 	"go.uber.org/zap"
 )
 
