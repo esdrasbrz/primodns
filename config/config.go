@@ -1,11 +1,14 @@
 package config
 
 import (
+	"strconv"
+
 	"github.com/joho/godotenv"
 )
 
 type Config struct {
-	Cloudflare *CloudflareConfig
+	Cloudflare  *CloudflareConfig
+	MetricsPort int
 }
 
 func LoadConfig() (*Config, error) {
@@ -17,8 +20,14 @@ func LoadConfig() (*Config, error) {
 		return nil, err
 	}
 
+	httpMetricsPort, err := strconv.Atoi(getEnv("HTTP_METRICS_PORT", "9987"))
+	if err != nil {
+		return nil, err
+	}
+
 	config := Config{
-		Cloudflare: cloudflareConfig,
+		Cloudflare:  cloudflareConfig,
+		MetricsPort: httpMetricsPort,
 	}
 
 	return &config, nil

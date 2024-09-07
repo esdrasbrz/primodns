@@ -1,11 +1,13 @@
 package metrics
 
 import (
+	"fmt"
 	"net/http"
 
 	"github.com/prometheus/client_golang/prometheus"
 	"github.com/prometheus/client_golang/prometheus/promauto"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
+	"go.uber.org/zap"
 )
 
 var (
@@ -23,7 +25,8 @@ var (
 	}, []string{"code", "dns_record", "ip"})
 )
 
-func ServeMetrics(addr string) {
+func ServeMetrics(addr string, logger *zap.Logger) {
 	http.Handle("/metrics", promhttp.Handler())
+	logger.Info(fmt.Sprintf("Listening to metrics at %s", addr))
 	http.ListenAndServe(addr, nil)
 }

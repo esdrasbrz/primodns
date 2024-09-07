@@ -1,6 +1,8 @@
 package main
 
 import (
+	"fmt"
+
 	"github.com/esdrasbrz/primodns/config"
 	"github.com/esdrasbrz/primodns/ddns"
 	"github.com/esdrasbrz/primodns/metrics"
@@ -21,6 +23,6 @@ func main() {
 	cfs := cloudflare.New(config.Cloudflare, logger)
 	dyn := ddns.New(logger, cfs)
 
-	go metrics.ServeMetrics("0.0.0.0:9987")
+	go metrics.ServeMetrics(fmt.Sprintf("0.0.0.0:%d", config.MetricsPort), logger)
 	dyn.RunDDNSUpdater()
 }
