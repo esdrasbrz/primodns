@@ -3,6 +3,7 @@ package ddns
 import (
 	"time"
 
+	"github.com/esdrasbrz/primodns/metrics"
 	"github.com/esdrasbrz/primodns/services/cloudflare"
 	externalip "github.com/glendc/go-external-ip"
 	"go.uber.org/zap"
@@ -13,6 +14,7 @@ type DDNS struct {
 	cloudflare cloudflare.CloudflareService
 	logger     *zap.Logger
 	lastIP     string
+	updatedAt  int64
 }
 
 func New(logger *zap.Logger, cloudflare cloudflare.CloudflareService) *DDNS {
@@ -30,8 +32,10 @@ func (d *DDNS) update() {
 
 	if err != nil {
 		d.logger.Error("error while fetching external IP", zap.Error(err))
+		metrics.ExternalIPRequests.WithLabelValues("error").Inc()
 		return
 	}
+	metrics.ExternalIPRequests.WithLabelValues("success").Inc()
 
 	// check if the IP is the same as before, then do nothing
 	if ip.String() == d.lastIP {
@@ -46,6 +50,9 @@ func (d *DDNS) update() {
 	}
 
 	d.lastIP = ip.String()
+	d.updatedAt = time.Now().UTC().Unix()
+	metrics.LastUpdatedAt.WithLabelValues(d.lastIP).Set(float64(d.updatedAt))
+
 	d.logger.Info("Domains updated", zap.String("ip", ip.String()))
 }
 

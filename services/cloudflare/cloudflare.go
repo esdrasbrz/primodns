@@ -7,6 +7,7 @@ import (
 	"net/http"
 
 	"github.com/esdrasbrz/primodns/config"
+	"github.com/esdrasbrz/primodns/metrics"
 	"github.com/hashicorp/go-multierror"
 	"go.uber.org/zap"
 )
@@ -63,6 +64,11 @@ func (s *service) updateDomain(dnsRecord, content string) error {
 		return err
 	}
 
+	metrics.CloudflareRequests.WithLabelValues(
+		fmt.Sprint(response.StatusCode),
+		dnsRecord,
+		content,
+	).Inc()
 	if response.StatusCode >= 300 {
 		s.logger.Error(
 			"Error while updating domain",
