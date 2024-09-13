@@ -49,6 +49,7 @@ func (d *DDNS) update() {
 		return
 	}
 
+	metrics.LastUpdatedAt.DeleteLabelValues(d.lastIP)
 	d.lastIP = ip.String()
 	d.updatedAt = time.Now().UTC().Unix()
 	metrics.LastUpdatedAt.WithLabelValues(d.lastIP).Set(float64(d.updatedAt))
